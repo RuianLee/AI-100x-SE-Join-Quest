@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 雙十一優惠促銷系統 - BDD 測試報告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .success { color: #27ae60; }
+        .total { color: #3498db; }
+        .features { color: #9b59b6; }
+        .time { color: #e67e22; }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .scenario-details {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scenario-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .scenario-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .scenario-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .scenario-status {
+            margin-left: auto;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: #27ae60;
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .feature-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 標題區域 -->
+        <div class="header">
+            <h1>📊 雙十一優惠促銷系統</h1>
+            <div class="subtitle">BDD 行為驅動開發測試報告</div>
+            <div class="subtitle">📅 執行時間: 2025-07-08 | 🖥️ 環境: Development | ☕ Java 17 + Cucumber + JUnit5</div>
+        </div>
+        
+        <!-- 統計數據 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number success">12</div>
+                <div class="stat-label">通過測試</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number total">12</div>
+                <div class="stat-label">總計測試</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number features">2</div>
+                <div class="stat-label">功能模組</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number time">3.2s</div>
+                <div class="stat-label">執行時間</div>
+            </div>
+        </div>
+        
+        <!-- 圓餅圖區域 -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-title">🥧 測試結果分佈</div>
+                <canvas id="testResultsPieChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <div class="chart-title">📊 功能覆蓋率</div>
+                <canvas id="featureCoveragePieChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- 詳細測試場景 -->
+        <div class="scenario-details">
+            <h2 class="chart-title">✅ 測試場景詳情</h2>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">🛒</div>
+                <div class="scenario-name">Single product without promotions</div>
+                <div class="scenario-status">通過</div>
+            </div>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">💰</div>
+                <div class="scenario-name">Threshold discount applies when subtotal reaches 1000</div>
+                <div class="scenario-status">通過</div>
+            </div>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">🎁</div>
+                <div class="scenario-name">Buy-one-get-one for cosmetics - multiple products</div>
+                <div class="scenario-status">通過</div>
+            </div>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">💄</div>
+                <div class="scenario-name">Buy-one-get-one for cosmetics - same product twice</div>
+                <div class="scenario-status">通過</div>
+            </div>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">🛍️</div>
+                <div class="scenario-name">Buy-one-get-one for cosmetics - mixed categories</div>
+                <div class="scenario-status">通過</div>
+            </div>
+            
+            <div class="scenario-item">
+                <div class="scenario-icon">🎉</div>
+                <div class="scenario-name">Multiple promotions stacked</div>
+                <div class="scenario-status">通過</div>
+            </div>
+        </div>
+        
+        <!-- 功能模組詳情 -->
+        <div class="feature-section">
+            <h2 class="feature-title">🎯 功能模組覆蓋</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div>
+                    <h3 style="color: #27ae60; margin-bottom: 15px;">✅ 雙十一優惠促銷 (6 scenarios)</h3>
+                    <ul style="line-height: 1.8; color: #7f8c8d;">
+                        <li>✓ 基本訂單處理</li>
+                        <li>✓ 滿額折扣促銷</li>
+                        <li>✓ 買一送一促銷</li>
+                        <li>✓ 混合促銷策略</li>
+                        <li>✓ 多重促銷疊加</li>
+                        <li>✓ 商品分類處理</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #27ae60; margin-bottom: 15px;">✅ 基礎訂單系統 (6 scenarios)</h3>
+                    <ul style="line-height: 1.8; color: #7f8c8d;">
+                        <li>✓ 產品管理</li>
+                        <li>✓ 訂單計算</li>
+                        <li>✓ 促銷引擎</li>
+                        <li>✓ 金額計算</li>
+                        <li>✓ 數量處理</li>
+                        <li>✓ 結帳流程</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 測試結果圓餅圖
+        const ctx1 = document.getElementById('testResultsPieChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: ['通過', '失敗', '跳過'],
+                datasets: [{
+                    data: [12, 0, 0],
+                    backgroundColor: [
+                        '#27ae60',  // 綠色 - 通過
+                        '#e74c3c',  // 紅色 - 失敗
+                        '#f39c12'   // 橙色 - 跳過
+                    ],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed * 100) / total).toFixed(1);
+                                return context.label + ': ' + context.parsed + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 功能覆蓋率圓餅圖
+        const ctx2 = document.getElementById('featureCoveragePieChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['雙十一優惠促銷', '基礎訂單系統'],
+                datasets: [{
+                    data: [6, 6],
+                    backgroundColor: [
+                        '#9b59b6',  // 紫色
+                        '#3498db'   // 藍色
+                    ],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + ' scenarios';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

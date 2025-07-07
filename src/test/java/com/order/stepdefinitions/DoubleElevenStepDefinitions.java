@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class OrderStepDefinitions {
+public class DoubleElevenStepDefinitions {
     private OrderService orderService;
     private Order order;
     private List<OrderItem> orderItems;
     
-    public OrderStepDefinitions() {
+    public DoubleElevenStepDefinitions() {
         this.orderService = new OrderService();
         this.orderItems = new ArrayList<>();
     }
@@ -47,7 +47,6 @@ public class OrderStepDefinitions {
     public void the_buy_one_get_one_promotion_for_cosmetics_is_active() {
         BuyOneGetOnePromotion promotion = new BuyOneGetOnePromotion("cosmetics");
         orderService.setBuyOneGetOnePromotion(promotion);
-        
         this.orderItems = new ArrayList<>();
     }
 
@@ -59,14 +58,15 @@ public class OrderStepDefinitions {
             String productName = row.get("productName");
             int quantity = Integer.parseInt(row.get("quantity"));
             BigDecimal unitPrice = new BigDecimal(row.get("unitPrice"));
-            
-            // Check if category is specified in the data table
             String category = row.get("category");
-            if (category == null) {
-                category = "default";
+            
+            Product product;
+            if (category != null) {
+                product = new Product(productName, unitPrice, category);
+            } else {
+                product = new Product(productName, unitPrice);
             }
             
-            Product product = new Product(productName, unitPrice, category);
             OrderItem item = new OrderItem(product, quantity);
             this.orderItems.add(item);
         }

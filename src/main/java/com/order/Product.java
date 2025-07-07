@@ -12,6 +12,10 @@ public class Product {
         this.unitPrice = unitPrice;
         this.category = category;
     }
+    
+    public Product(String name, BigDecimal unitPrice) {
+        this(name, unitPrice, null);
+    }
 
     public String getName() {
         return name;

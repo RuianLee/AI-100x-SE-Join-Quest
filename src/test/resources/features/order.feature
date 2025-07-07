@@ -72,7 +72,6 @@ Feature: E-commerce Order Pricing Promotions
       | 襪子          | 1        |
       | 口紅          | 2        |
 
-  @ignore
   Scenario: Multiple promotions stacked
     Given the threshold discount promotion is configured:
       | threshold | discount |
@@ -88,4 +87,4 @@ Feature: E-commerce Order Pricing Promotions
     And the customer should receive:
       | productName | quantity |
       | T-shirt     | 3        |
-      | 口紅          | 2        | 
+      | 口紅          | 2        |

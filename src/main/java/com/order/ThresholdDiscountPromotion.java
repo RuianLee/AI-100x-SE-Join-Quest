@@ -11,15 +11,11 @@ public class ThresholdDiscountPromotion {
         this.discount = discount;
     }
 
-    public BigDecimal getThreshold() {
-        return threshold;
+    public boolean isApplicable(BigDecimal amount) {
+        return amount.compareTo(threshold) >= 0;
     }
 
     public BigDecimal getDiscount() {
         return discount;
-    }
-
-    public boolean isApplicable(BigDecimal originalAmount) {
-        return originalAmount.compareTo(threshold) >= 0;
     }
 } 

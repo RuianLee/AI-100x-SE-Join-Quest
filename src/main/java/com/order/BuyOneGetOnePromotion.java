@@ -7,11 +7,12 @@ public class BuyOneGetOnePromotion {
         this.targetCategory = targetCategory;
     }
 
-    public String getTargetCategory() {
-        return targetCategory;
+    public boolean isApplicable(Product product) {
+        return product.getCategory() != null && 
+               product.getCategory().equals(targetCategory);
     }
 
-    public boolean isApplicable(String category) {
-        return targetCategory.equals(category);
+    public String getTargetCategory() {
+        return targetCategory;
     }
 } 

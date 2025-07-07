@@ -1,2 +1,2 @@
-com\order\stepdefinitions\OrderStepDefinitions.class
+com\order\stepdefinitions\DoubleElevenStepDefinitions.class
 com\order\RunCucumberTest.class

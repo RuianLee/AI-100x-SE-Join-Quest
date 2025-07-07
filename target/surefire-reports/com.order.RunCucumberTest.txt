@@ -1,4 +1,37 @@
 -------------------------------------------------------------------------------
 Test set: com.order.RunCucumberTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.153 s -- in com.order.RunCucumberTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.184 s <<< FAILURE! -- in com.order.RunCucumberTest
+RunCucumberTest.Cucumber -- Time elapsed: 0.178 s <<< ERROR!
+java.lang.IllegalArgumentException: 
+Couldn't create parent directories of 'C:\Users\User\新增資料夾\AI-100x-SE-Join-Quest\target\cucumber-reports\Cucumber.json'.
+Make sure the the parent directory 'C:\Users\User\新增資料夾\AI-100x-SE-Join-Quest\target\cucumber-reports' isn't a file.
+
+Note: This usually happens when plugins write to colliding paths.
+For example: 'html:target/cucumber, json:target/cucumber/report.json'
+You can fix this by making the paths do no collide.
+For example: 'html:target/cucumber/report.html, json:target/cucumber/report.json'
+The details are in the stack trace below:
+	at io.cucumber.core.plugin.PluginFactory.createFileOutputStream(PluginFactory.java:222)
+	at io.cucumber.core.plugin.PluginFactory.openStream(PluginFactory.java:199)
+	at io.cucumber.core.plugin.PluginFactory.convert(PluginFactory.java:166)
+	at io.cucumber.core.plugin.PluginFactory.instantiate(PluginFactory.java:99)
+	at io.cucumber.core.plugin.PluginFactory.create(PluginFactory.java:63)
+	at io.cucumber.core.plugin.Plugins.createPlugins(Plugins.java:32)
+	at io.cucumber.core.plugin.Plugins.<init>(Plugins.java:25)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.createCucumberExecutionContext(CucumberEngineExecutionContext.java:53)
+	at io.cucumber.junit.platform.engine.CucumberEngineExecutionContext.startTestRun(CucumberEngineExecutionContext.java:95)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.ifChildren(CucumberEngineDescriptor.java:51)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.prepare(CucumberEngineDescriptor.java:21)
+	at io.cucumber.junit.platform.engine.CucumberEngineDescriptor.prepare(CucumberEngineDescriptor.java:11)
+Caused by: java.nio.file.FileAlreadyExistsException: C:\Users\User\新增資料夾\AI-100x-SE-Join-Quest\target\cucumber-reports
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.createDirectory(WindowsFileSystemProvider.java:521)
+	at java.base/java.nio.file.Files.createDirectory(Files.java:700)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Files.java:807)
+	at java.base/java.nio.file.Files.createDirectories(Files.java:753)
+	at io.cucumber.core.plugin.PluginFactory.createFileOutputStream(PluginFactory.java:218)
+	... 11 more
+

@@ -67,10 +67,63 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.junit-platform.naming-strategy=long
+                            cucumber.plugin=pretty,html:target/cucumber-reports,json:target/cucumber-reports/Cucumber.json,junit:target/cucumber-reports/Cucumber.xml
+                            cucumber.publish.enabled=false
+                        </configurationParameters>
+                    </properties>
                 </configuration>
+            </plugin>
+
+            <!-- 🎯 Maven Cucumber Reporting Plugin - 生成帶圓餅圖的專業報告 -->
+            <plugin>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>5.7.5</version>
+                <executions>
+                    <execution>
+                        <id>execution</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 報告標題 -->
+                            <projectName>雙十一優惠促銷系統 - BDD 測試報告</projectName>
+                            <skip>false</skip>
+                            
+                            <!-- 修改為更簡單的輸出目錄 -->
+                            <outputDirectory>${project.build.directory}/cucumber-html-reports</outputDirectory>
+                            <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+                            
+                            <!-- JSON 文件配置 -->
+                            <jsonFiles>
+                                <param>**/*.json</param>
+                            </jsonFiles>
+                            
+                            <!-- 高級報告功能 -->
+                            <mergeFeaturesById>false</mergeFeaturesById>
+                            <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
+                            <checkBuildResult>false</checkBuildResult>
+                            
+                            <!-- 版本和環境資訊 -->
+                            <buildNumber>v1.0.0</buildNumber>
+                            
+                            <!-- 分類資訊 - 會顯示在報告中 -->
+                            <classifications>
+                                <platform>Java 17</platform>
+                                <framework>Cucumber + JUnit5</framework>
+                                <branch>main</branch>
+                                <environment>Development</environment>
+                                <execution>Local</execution>
+                                <version>1.0.0</version>
+                                <project>訂單優惠模組</project>
+                            </classifications>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
